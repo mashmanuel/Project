@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #076898;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .signup-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .signup-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .form-group button:hover {
+            background-color: #218838;
+        }
+        .login-option, .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .login-option a, .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .login-option a:hover, .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        .forgot-password {
+            margin-top: -10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Soup-erb Eats restaurant</h1>
+    </header>
+    <main>
+        <section id="home">
+            <h2>Order from our variety of delicacies today!</h2>
+        </section>
+        <section class="why-choose-us">
+            <h2>Why Choose Us?</h2>
+            <p>Are you searching for more than just a meal? Look no further than our restaurant, where culinary excellence meets unparalleled ambiance, creating an unforgettable dining experience for every patron.</p>
+        </section>
+    </main>
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <form action="Sign up.php" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="forgot-password">
+                <a href="Forgot password.html">Forgot Password?</a>
+            </div>
+            <div class="form-group">
+                <button type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div class="login-option">
+            <p>Already have an account? <a href="Login page.html">Log In</a></p>
+        </div>
+    </div>
+</body>
+</html>

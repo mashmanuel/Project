@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Billing System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header, footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+        main {
+            display: flex;
+            flex: 1;
+            padding: 1rem;
+        }
+        section {
+            flex: 1;
+            margin: 0 1rem;
+        }
+        #menu {
+            border-right: 2px solid #ccc;
+            padding-right: 1rem;
+        }
+        #order-summary {
+            padding-left: 1rem;
+        }
+        h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+        .item-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .item-image {
+            width: 100%;
+            height: auto;
+            max-height: 150px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .item-name {
+            flex: 2;
+        }
+        .item-price, .add-to-order, .delete-item {
+            flex: 1;
+            text-align: right;
+        }
+        .add-to-order, .delete-item {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+        .add-to-order:hover {
+            background-color: #218838;
+        }
+        .delete-item {
+            background-color: #dc3545;
+        }
+        .delete-item:hover {
+            background-color: #c82333;
+        }
+        #order-list {
+            border-top: 2px solid #ccc;
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+        #total {
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+        #checkout {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        #checkout:hover {
+            background-color: #0056b3;
+        }
+        #payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        .payment-option {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #f1f1f1;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .payment-option:hover {
+            background-color: #ddd;
+        }
+        .payment-input {
+            margin-bottom: 1rem;
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+        .close-modal {
+            background-color: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .close-modal:hover {
+            background-color: #c82333;
+        }
+        #pay-now {
+            background-color: #28a745;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #pay-now:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Restaurant Billing System</h1>
+    </header>
+    <main>
+        <section id="menu">
+            <h2>Menu</h2>
+            <ul id="menu-list"></ul>
+        </section>
+        <section id="order-summary">
+            <h2>Order Summary</h2>
+            <ul id="order-list"></ul>
+            <p id="total">Total: ksh.0.00</p>
+            <button id="checkout">Checkout</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Restaurant Billing System</p>
+    </footer>
+    <div id="payment-modal">
+        <div class="modal-content">
+            <h2>Select Payment Option</h2>
+            <div class="payment-option" id="pay-cash">Pay with Cash</div>
+            <div class="payment-option" id="pay-card">Pay with Credit Card</div>
+            <div class="payment-option" id="pay-mobile">Pay with Mobile Payment</div>
+            <div id="payment-inputs"></div>
+            <button class="close-modal">Close</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuList = document.getElementById('menu-list');
+            const orderList = document.getElementById('order-list');
+            const totalElement = document.getElementById('total');
+            const paymentModal = document.getElementById('payment-modal');
+            const paymentInputs = document.getElementById('payment-inputs');
+            let total = 0;
+            let orderId = new Date().getTime();
+
+            const menuItems = [
+                { name: 'Burger', price: 500, image: 'https://via.placeholder.com/150' },
+                { name: 'Pizza', price: 800, image: 'https://via.placeholder.com/150' },
+                { name: 'Pasta', price: 600, image: 'https://via.placeholder.com/150' }
+            ];
+
+            const renderMenuItems = () => {
+                menuList.innerHTML = '';
+                menuItems.forEach(item => {
+                    const menuItem = document.createElement('li');
+                    menuItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="item-image">
+                        <div class="item-info">
+                            <span class="item-name">${item.name}</span>
+                            <span class="item-price">ksh.${item.price.toFixed(2)}</span>
+                            <button class="add-to-order" data-item="${item.name}" data-price="${item.price}">Add</button>
+                        </div>
+                    `;
+                    menuList.appendChild(menuItem);
+                });
+
+                document.querySelectorAll('.add-to-order').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const itemName = button.getAttribute('data-item');
+                        const itemPrice = parseFloat(button.getAttribute('data-price'));
+
+                        const orderItem = document.createElement('li');
+                        orderItem.innerHTML = `
+                            <span>${itemName} - ksh.${itemPrice.toFixed(2)}</span>
+                            <button class="delete-item">Delete</button>
+                        `;
+                        orderItem.querySelector('.delete-item').addEventListener('click', () => {
+                            orderList.removeChild(orderItem);
+                            total -= itemPrice;
+                            totalElement.textContent = `Total: ksh.${total.toFixed(2)}`;
+                        });
+
+                        orderList.appendChild(orderItem);
+                        total += itemPrice;
+                        totalElement.textContent = `Total: ksh.${total.toFixed(2)}`;
+                    });
+                });
+            };
+
+            const savePayment = async (paymentMode) => {
+                const phoneNumber = document.querySelector('.payment-input')?.value || 'N/A';
+                try {
+                    const response = await fetch('/payment-success', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ orderId, phoneNumber, amount: total, paymentMode }),
+                    });
+                    const result = await response.json();
+                    if (response.ok) alert(result.message);
+                    else alert(`Error: ${result.message}`);
+                } catch (error) {
+                    alert(`Failed to save payment: ${error}`);
+                }
+                paymentModal.style.display = 'none';
+            };
+
+            document.getElementById('checkout').addEventListener('click', () => {
+                if (total > 0) {
+                    paymentModal.style.display = 'flex';
+                    paymentInputs.innerHTML = '';
+                } else alert('Your order is empty!');
+            });
+
+            document.getElementById('pay-mobile').addEventListener('click', () => {
+                paymentInputs.innerHTML = `
+                    <h3>Enter Mobile Number</h3>
+                    <input type="text" class="payment-input" placeholder="Mobile Number" maxlength="10">
+                    <button id="pay-now">Confirm Payment</button>
+                `;
+                document.getElementById('pay-now').addEventListener('click', () => savePayment('Mobile Payment'));
+            });
+
+            document.getElementById('pay-cash').addEventListener('click', () => savePayment('Cash'));
+            document.getElementById('pay-card').addEventListener('click', () => {
+                paymentInputs.innerHTML = `
+                    <h3>Enter Card Details</h3>
+                    <input type="text" class="payment-input" placeholder="Card Number" maxlength="16">
+                    <button id="pay-now">Confirm Payment</button>
+                `;
+                document.getElementById('pay-now').addEventListener('click', () => savePayment('Card Payment'));
+            });
+
+            document.querySelector('.close-modal').addEventListener('click', () => {
+                paymentModal.style.display = 'none';
+            });
+
+            renderMenuItems();
+        });
+    </script>
+</body>
+</html>

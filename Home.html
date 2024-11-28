@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Soup-erb Eats restaurant - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #0957b1;
+        }
+
+        header, footer {
+            background-color: #192121;
+            color: hsl(189, 69%, 52%);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        nav {
+            background-color: #105421;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        main {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        #home {
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        p {
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .menu-item {
+            background-color: #05b132;
+            color: #fff;
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .menu-item:hover {
+            background-color: #060707;
+        }
+
+        .why-choose-us {
+            background-color: rgba(43, 160, 164, 0.902);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            border-radius: 10px;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Soup-erb Eats restaurant</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="Admin-panel.html">Admin Panel</a></li>
+            <li><a href="About us.html">About Us</a></li>
+            <li><a href="Contact us.html">Contact Us</a></li>
+            <li><a href="Log out.php">Log out</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="home">
+            <h2>Order from our variety of delicacies today!</h2>
+            <div class="menu">
+                <a href="Menu.html" class="menu-item">View Menu</a>
+            </div>
+        </section>
+        <section class="why-choose-us">
+            <h2>Why Choose Us?</h2>
+            <p>Are you searching for more than just a meal? Look no further than our restaurant, where culinary excellence meets unparalleled ambiance, creating an unforgettable dining experience for every patron.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Soup-erb Eats restaurant</p>
+    </footer>
+</body>
+</html>

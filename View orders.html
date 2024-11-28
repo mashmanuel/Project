@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Billing System - Admin Panel</title>
+</head>
+<body>
+    <h1>Orders</h1>
+    <p>Status Checker:</p>
+    <div id="status-checker">No new orders</div>
+
+    <script>
+        function updateStatus(status) {
+            document.getElementById('status-checker').innerText = status;
+        }
+
+        // Simulating order creation and update
+        setInterval(() => {
+            const newStatus = Math.random() > 0.5 ? 'New orders pending' : 'No new orders';
+            updateStatus(newStatus);
+        }, 5000); // Update every 5 seconds
+    </script>
+</body>
+</html>

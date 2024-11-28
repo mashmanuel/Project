@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Billing System - Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #1696d2;
+        }
+
+        header, footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        nav {
+            background-color: #105421;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        main {
+            flex: 1;
+            padding: 1rem;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-section {
+            margin-bottom: 2rem;
+        }
+
+        .admin-section button, .admin-section input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+
+        .admin-section button:hover, .admin-section input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .menu-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .menu-item button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+
+        .menu-item button:hover {
+            background-color: #c82333;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input[type="text"], .form-group input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            box-sizing: border-box;
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .login-container input[type="password"], .login-container input[type="submit"] {
+            padding: 0.5rem;
+        }
+
+        .order-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .order-item {
+            border: 1px solid #ccc;
+            padding: 1rem;
+            border-radius: 5px;
+            background-color: #fff;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Panel</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div id="login-section" class="login-container">
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+        <div id="admin-panel" style="display:none;">
+            <section>
+                <h2>Manage Menu Items</h2>
+                <div class="admin-section">
+                    <h3>Add / Update Menu Item</h3>
+                    <form id="menu-form">
+                        <div class="form-group">
+                            <label for="item-name">Item Name</label>
+                            <input type="text" id="item-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-price">Price (ksh)</label>
+                            <input type="number" id="item-price" required>
+                        </div>
+                        <input type="submit" value="Add Item">
+                        <input type="hidden" id="item-index">
+                    </form>
+                </div>
+                <div class="admin-section">
+                    <h3>Current Menu</h3>
+                    <ul class="menu-list" id="menu-list">
+                        <!-- Menu items will be displayed here -->
+                    </ul>
+                </div>
+                <div class="admin-section">
+                    <button onclick="window.location.href = 'View orders.html'">View Orders</button>
+                    <h3>Orders</h3>
+                    <ul class="order-list" id="order-list">
+                        <!-- Orders will be displayed here -->
+                    </ul>
+                </div>
+                
+            </section>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Restaurant Billing System</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuForm = document.getElementById('menu-form');
+            const menuList = document.getElementById('menu-list');
+            const itemNameInput = document.getElementById('item-name');
+            const itemPriceInput = document.getElementById('item-price');
+            const itemIndexInput = document.getElementById('item-index');
+            const loginForm = document.getElementById('login-form');
+            const loginSection = document.getElementById('login-section');
+            const adminPanel = document.getElementById('admin-panel');
+            const viewOrdersBtn = document.getElementById('view-orders-btn');
+            const orderList = document.getElementById('order-list');
+            
+            const adminPassword = 'MASH';
+
+            const initialMenuItems = [
+                { name: "Margherita Pizza", price: 900 },
+                { name: "Caesar Salad", price: 500 },
+                { name: "Spaghetti Carbonara", price: 1200 },
+                { name: "Tiramisu", price: 2600 }
+            ];
+
+            let menuItems = JSON.parse(localStorage.getItem('menuItems')) || initialMenuItems;
+            localStorage.setItem('menuItems', JSON.stringify(menuItems));
+
+            const renderMenuItems = () => {
+                menuList.innerHTML = '';
+                menuItems.forEach((item, index) => {
+                    const menuItem = document.createElement('li');
+                    menuItem.className = 'menu-item';
+                    menuItem.innerHTML = `
+                        <span>${item.name} - ksh.${item.price}</span>
+                        <div>
+                            <button onclick="editMenuItem(${index})">Edit</button>
+                            <button onclick="removeMenuItem(${index})">Remove</button>
+                        </div>
+                    `;
+                    menuList.appendChild(menuItem);
+                });
+            };
+
+            const addOrUpdateMenuItem = (e) => {
+                e.preventDefault();
+                const itemName = itemNameInput.value;
+                const itemPrice = parseFloat(itemPriceInput.value);
+                const itemIndex = itemIndexInput.value;
+
+                if (itemIndex === '') {
+                    menuItems.push({ name: itemName, price: itemPrice });
+                } else {
+                    menuItems[itemIndex] = { name: itemName, price: itemPrice };
+                }
+
+                localStorage.setItem('menuItems', JSON.stringify(menuItems));
+                renderMenuItems();
+                menuForm.reset();
+            };
+
+            window.editMenuItem = (index) => {
+                const item = menuItems[index];
+                itemNameInput.value = item.name;
+                itemPriceInput.value = item.price;
+                itemIndexInput.value = index;
+            };
+
+            window.removeMenuItem = (index) => {
+                menuItems.splice(index, 1);
+                localStorage.setItem('menuItems', JSON.stringify(menuItems));
+                renderMenuItems();
+            };
+
+            const login = (e) => {
+                e.preventDefault();
+                const password = document.getElementById('password').value;
+                if (password === adminPassword) {
+                    loginSection.style.display = 'none';
+                    adminPanel.style.display = 'block';
+                } else {
+                    alert('Incorrect password. Please try again.');
+                }
+            };
+
+            loginForm.addEventListener('submit', login);
+            menuForm.addEventListener('submit', addOrUpdateMenuItem);
+            renderMenuItems();
+        });
+    </script>
+</body>
+</html>
