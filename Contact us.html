@@ -10,6 +10,35 @@
         margin: 0;
         padding: 0;
     }
+    header, footer {
+            background-color: #192121;
+            color: hsl(189, 69%, 52%);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        nav {
+            background-color: #105421;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
 
     .container {
         max-width: 800px;
@@ -56,6 +85,20 @@
 </style>
 </head>
 <body>
+    <header>
+        <h1>Welcome to Soup-erb Eats restaurant</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="Admin-panel.html">Admin Panel</a></li>
+            <li><a href="About us.html">About Us</a></li>
+            <li><a href="Contact us.html">Contact Us</a></li>
+            <li><a href="Index.html">Create account</a></li>
+            <li><a href="Log out.php">Log out</a></li>
+        </ul>
+    </nav>
 
 <div class="container">
     <h1>Contact Us</h1>
