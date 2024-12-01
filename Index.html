@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +8,33 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #076898;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f0f0f0;
             margin: 0;
+        }
+        header {
+            background-color: #192121;
+            color: hsl(189, 69%, 52%);
+            text-align: center;
+            padding: 1rem;
+        }
+        nav {
+            background-color: #105421;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style-type: none;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
         }
         .signup-container {
             background-color: #fff;
@@ -20,6 +42,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             width: 300px;
+            margin: 20px auto;
         }
         .signup-container h2 {
             text-align: center;
@@ -72,18 +95,21 @@
     <header>
         <h1>Welcome to Soup-erb Eats restaurant</h1>
     </header>
-    <main>
-        <section id="home">
-            <h2>Order from our variety of delicacies today!</h2>
-        </section>
-        <section class="why-choose-us">
-            <h2>Why Choose Us?</h2>
-            <p>Are you searching for more than just a meal? Look no further than our restaurant, where culinary excellence meets unparalleled ambiance, creating an unforgettable dining experience for every patron.</p>
-        </section>
-    </main>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="Admin-panel.html">Admin Panel</a></li>
+            <li><a href="About us.html">About Us</a></li>
+            <li><a href="Contact us.html">Contact Us</a></li>
+            <li><a href="Index.html">Create account</a></li>
+            <li><a href="Log out.php">Log out</a></li>
+        </ul>
+    </nav>
     <div class="signup-container">
         <h2>Sign Up</h2>
+        <p>Please fill out the form below to create an account.</p>
         <form action="Sign up.php" method="post">
+            <?php include('errors.php'); ?>
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
@@ -96,9 +122,6 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <div class="forgot-password">
-                <a href="Forgot password.html">Forgot Password?</a>
-            </div>
             <div class="form-group">
                 <button type="submit">Sign Up</button>
             </div>
@@ -109,3 +132,4 @@
     </div>
 </body>
 </html>
+```
